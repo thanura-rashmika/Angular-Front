@@ -8,6 +8,10 @@ import { IconsComponent } from '../../icons/icons.component';
 import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
+import {CustomersComponent} from '../../customers/customers.component';
+import {ItemsComponent} from '../../items/items.component';
+import {OrdersComponent} from '../../orders/orders.component';
+import {OrderDetailsComponent} from '../../order-details/order-details.component';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -53,6 +57,10 @@ export const AdminLayoutRoutes: Routes = [
     //     }]
     // }
     { path: 'dashboard',      component: DashboardComponent },
+    { path: 'customer',      component: CustomersComponent },
+    { path: 'item',      component: ItemsComponent },
+    { path: 'order',      component: OrdersComponent },
+    { path: 'orderDetail',      component: OrderDetailsComponent },
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'table-list',     component: TableListComponent },
     { path: 'typography',     component: TypographyComponent },
