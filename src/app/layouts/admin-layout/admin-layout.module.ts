@@ -13,35 +13,43 @@ import { NotificationsComponent } from '../../notifications/notifications.compon
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 
 import {
-  MatButtonModule,
-  MatInputModule,
-  MatRippleModule,
-  MatFormFieldModule,
-  MatTooltipModule,
-  MatSelectModule
-} from '@angular/material';
-@NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
     MatButtonModule,
+    MatInputModule,
     MatRippleModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
     MatTooltipModule,
-  ],
-  declarations: [
-    DashboardComponent,
-    UserProfileComponent,
-    TableListComponent,
-    TypographyComponent,
-    IconsComponent,
-    MapsComponent,
-    NotificationsComponent,
-    UpgradeComponent,
-  ]
+    MatSelectModule
+} from '@angular/material';
+import {CustomersComponent} from '../../customers/customers.component';
+import {ItemsComponent} from '../../items/items.component';
+import {OrdersComponent} from '../../orders/orders.component';
+import {OrderDetailsComponent} from '../../order-details/order-details.component';
+@NgModule({
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        MatButtonModule,
+        MatRippleModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatTooltipModule,
+    ],
+    declarations: [
+        DashboardComponent,
+        UserProfileComponent,
+        TableListComponent,
+        TypographyComponent,
+        IconsComponent,
+        MapsComponent,
+        NotificationsComponent,
+        UpgradeComponent,
+        CustomersComponent,
+        ItemsComponent,
+        OrdersComponent,
+        OrderDetailsComponent,
+    ]
 })
 
 export class AdminLayoutModule {}

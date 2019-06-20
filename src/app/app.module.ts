@@ -22,10 +22,6 @@ import {
   AgmCoreModule
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
-import { CustomersComponent } from './customers/customers.component';
-import { ItemsComponent } from './items/items.component';
-import { OrdersComponent } from './orders/orders.component';
-import { OrderDetailsComponent } from './order-details/order-details.component';
 
 @NgModule({
   imports: [
@@ -42,10 +38,6 @@ import { OrderDetailsComponent } from './order-details/order-details.component';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    CustomersComponent,
-    ItemsComponent,
-    OrdersComponent,
-    OrderDetailsComponent,
 
   ],
   providers: [],
