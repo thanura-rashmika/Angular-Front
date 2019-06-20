@@ -1,23 +1,11 @@
-import { Component } from '@angular/core';
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  query,
-} from '@angular/animations'
+import { Component} from '@angular/core';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  
-
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
-  getRouteAnimation(outlet) {
-      
-      return outlet.activatedRouteData.animation
-  }
+
 }
