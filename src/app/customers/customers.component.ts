@@ -55,7 +55,7 @@ export class CustomersComponent implements OnInit {
                         if (response.code === 201) {
                             Swal.fire(
                                 'Added!',
-                                'New Customer hass been Saved Successfully.',
+                                'New Customer has been Saved Successfully.',
                                 'success'
                             );
                             this.getAllCustomers();
@@ -90,15 +90,67 @@ export class CustomersComponent implements OnInit {
             address: this.customerForm.controls['txtAddress'].value,
             mobile: this.customerForm.controls['txtMobile'].value
         };
-        this.dataService.updateCustomer(customer).subscribe(
-            (response) => {
-                console.log(response);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to Update a Customer!',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Update it!',
+            cancelButtonText: 'No, Keep it'
+        }).then((result) => {
+            if (result.value) {
+                this.dataService.updateCustomer(customer).subscribe(
+                    (response) => {
+                        if (response.code === 201) {
+                            Swal.fire(
+                                'Updated!',
+                                'Customer has been Updated Successfully.',
+                                'success'
+                            );
+                            this.getAllCustomers();
+                        }
+                    }
+                );
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelled',
+                    'Customer Not Updated',
+                    'error'
+                );
             }
-        );
+        });
     }
 
     deleteCustomer(cid) {
-
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to Delete a Customer!',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Delete it!',
+            cancelButtonText: 'No, Keep it'
+        }).then((result) => {
+            if (result.value) {
+                this.dataService.deleteCustomer(cid).subscribe(
+                    (response) => {
+                        if (response.code === 201) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Customer has been Removed Successfully.',
+                                'success'
+                            );
+                            this.getAllCustomers();
+                        }
+                    }
+                );
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelled',
+                    'Customer Not Deleted',
+                    'error'
+                );
+            }
+        });
     }
 
     getAllCustomers() {
