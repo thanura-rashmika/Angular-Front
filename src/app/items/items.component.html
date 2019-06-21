@@ -12,30 +12,31 @@
               <div class="row">
                 <div class="col-md-6">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Description" type="text" [(ngModel)]="name" [formControl]="itemForm.controls['txtName']">
+                    <input matInput placeholder="Name" type="text" [(ngModel)]="name" [formControl]="itemForm.controls['txtName']">
                   </mat-form-field>
                 </div>
                 <div class="col-md-6">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Contact Number" type="text" [(ngModel)]="price" [formControl]="itemForm.controls['txtPrice']">
+                    <input matInput placeholder="Price" type="text" [(ngModel)]="price" [formControl]="itemForm.controls['txtPrice']">
                   </mat-form-field>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12">
                   <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Address" type="text" [(ngModel)]="qty" [formControl]="itemForm.controls['txtQty']">
+                    <input matInput placeholder="Quantity" type="text" [(ngModel)]="qty" [formControl]="itemForm.controls['txtQty']">
                   </mat-form-field>
                 </div>
               </div>
-              <button mat-raised-button type="submit" [disabled]="!customerForm.valid" class="btn btn-info pull-right" (click)="addItem()">Add Customer</button>
+              <button *ngIf="!update" mat-raised-button type="submit" [disabled]="!itemForm.valid" class="btn btn-info pull-right" (click)="addItem()">Add Customer</button>
+              <button *ngIf="update" mat-raised-button type="submit" [disabled]="!itemForm.valid" class="btn btn-success pull-right" (click)="updateItem()">Add Customer</button>
               <button mat-raised-button type="reset" class="btn btn-danger pull-right">Clear</button>
               <div class="clearfix"></div>
             </form>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="name">
         <div class="card card-profile">
           <div class="card-avatar">
             <a href="#pablo">
@@ -46,9 +47,6 @@
             <h3 class="card-title">{{name}}</h3>
             <h4>{{price}}</h4>
             <h4>{{qty}}</h4>
-            <p class="card-description">
-              Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-            </p>
           </div>
         </div>
       </div>
@@ -57,8 +55,8 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title ">Simple Table</h4>
-            <p class="card-category"> Here is a subtitle for this table</p>
+            <h4 class="card-title ">All Items</h4>
+            <p class="card-category"> All Available Items of the System</p>
           </div>
           <div class="card-body">
             <div class="table-responsive">
@@ -76,6 +74,9 @@
                 <th>
                   Quantity
                 </th>
+                <th>
+                  Actions
+                </th>
                 </thead>
                 <tbody>
                 <tr *ngFor="let item of items">
@@ -90,6 +91,10 @@
                   </td>
                   <td>
                     {{item.qty}}
+                  </td>
+                  <td>
+                    <i class="fa fa-pencil" (click)="proceedUpdate(item)"></i>
+                    <i class="fa fa-trash" style="margin-left: 1vw" (click)="deleteItem(item.code)"></i>
                   </td>
                 </tr>
                 </tbody>

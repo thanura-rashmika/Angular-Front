@@ -86,6 +86,63 @@ export class ItemsComponent implements OnInit {
         });
     }
 
+    proceedUpdate(item) {
+        this.update = true;
+        this.state = 'Update';
+        this.code = item.code;
+        this.name = item.name;
+        this.price = item.price;
+        this.qty = item.qty;
+        this.itemForm.controls['txtName'].setValue(item.name);
+        this.itemForm.controls['txtPrice'].setValue(item.price);
+        this.itemForm.controls['txtQty'].setValue(item.qty);
+    }
+
+    updateItem() {
+        const item = {
+            code: this.code,
+            name: this.itemForm.controls['txtName'].value,
+            price: this.itemForm.controls['txtPrice'].value,
+            qty: this.itemForm.controls['txtQty'].value,
+        };
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to update an Item!',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Update it!',
+            cancelButtonText: 'No, Keep it'
+        }).then((result) => {
+            if (result.value) {
+                this.dataService.updateItem(item).subscribe(
+                    (response) => {
+                        if (response.code === 200) {
+                            Swal.fire(
+                                'Added!',
+                                'Item has been Updated Successfully.',
+                                'success'
+                            );
+                            this.getAllItems();
+                            this.clearForm();
+                            this.state = 'Add'
+                        }
+                    }
+                );
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelled',
+                    'Item Not Updated',
+                    'error'
+                );
+            }
+        });
+    }
+
+    deleteItem(code) {
+
+    }
+
     clearForm() {
         this.itemForm.controls['txtName'].setValue('');
         this.itemForm.controls['txtPrice'].setValue('');
