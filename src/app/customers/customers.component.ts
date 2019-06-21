@@ -73,11 +73,28 @@ export class CustomersComponent implements OnInit {
     }
 
     proceedUpdate(customer) {
-
+        this.cid = customer.cid;
+        this.customerForm.controls['txtName'].setValue(customer.name);
+        this.customerForm.controls['txtAddress'].setValue(customer.address);
+        this.customerForm.controls['txtMobile'].setValue(customer.mobile);
+        this.name = customer.name;
+        this.address = customer.address;
+        this.mobile = customer.mobile;
+        this.update = true;
     }
 
     updateCustomer() {
-
+        const customer = {
+            cid: this.cid,
+            name: this.customerForm.controls['txtName'].value,
+            address: this.customerForm.controls['txtAddress'].value,
+            mobile: this.customerForm.controls['txtMobile'].value
+        };
+        this.dataService.updateCustomer(customer).subscribe(
+            (response) => {
+                console.log(response);
+            }
+        );
     }
 
     deleteCustomer(cid) {
