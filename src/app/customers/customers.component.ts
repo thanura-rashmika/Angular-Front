@@ -19,6 +19,7 @@ export class CustomersComponent implements OnInit {
     mobile: any;
 
     update: boolean = false;
+    state: string = 'Save';
 
     constructor(private formBuilder: FormBuilder, private dataService: DataService) {
         this.customerForm = this.formBuilder.group({
@@ -59,6 +60,7 @@ export class CustomersComponent implements OnInit {
                                 'success'
                             );
                             this.getAllCustomers();
+                            this.clearForm();
                         }
                     }
                 );
@@ -73,6 +75,7 @@ export class CustomersComponent implements OnInit {
     }
 
     proceedUpdate(customer) {
+        this.state = 'Update'
         this.cid = customer.cid;
         this.customerForm.controls['txtName'].setValue(customer.name);
         this.customerForm.controls['txtAddress'].setValue(customer.address);
@@ -101,13 +104,15 @@ export class CustomersComponent implements OnInit {
             if (result.value) {
                 this.dataService.updateCustomer(customer).subscribe(
                     (response) => {
-                        if (response.code === 201) {
+                        if (response.code === 200) {
                             Swal.fire(
                                 'Updated!',
                                 'Customer has been Updated Successfully.',
                                 'success'
                             );
                             this.getAllCustomers();
+                            this.state = 'Save'
+                            this.clearForm();
                         }
                     }
                 );
@@ -151,6 +156,13 @@ export class CustomersComponent implements OnInit {
                 );
             }
         });
+    }
+
+    clearForm() {
+        this.cid = 0;
+        this.customerForm.controls['txtName'].setValue('');
+        this.customerForm.controls['txtAddress'].setValue('');
+        this.customerForm.controls['txtMobile'].setValue('');
     }
 
     getAllCustomers() {

@@ -4,8 +4,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title">New Customer</h4>
-                        <p class="card-category">Save New Customer</p>
+                        <h4 class="card-title">{{state}} Customer</h4>
+                        <p class="card-category">Manage Customers</p>
                     </div>
                     <div class="card-body">
                         <form [formGroup]="customerForm">
@@ -39,7 +39,7 @@
             <div class="col-md-4" *ngIf="name">
                 <div class="card card-profile">
                     <div class="card-avatar">
-                        <a href="#pablo">
+                        <a>
                             <img class="img" src="assets/icons/user.png" />
                         </a>
                     </div>
@@ -55,8 +55,8 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header card-header-danger">
-                        <h4 class="card-title ">Simple Table</h4>
-                        <p class="card-category"> Here is a subtitle for this table</p>
+                        <h4 class="card-title ">All Customers</h4>
+                        <p class="card-category"> All Available Customers of the System</p>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
