@@ -1,15 +1,100 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {DataService} from '../services/data.service';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-customers',
-  templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+    selector: 'app-customers',
+    templateUrl: './customers.component.html',
+    styleUrls: ['./customers.component.scss']
 })
 export class CustomersComponent implements OnInit {
 
-  constructor() { }
+    customerForm: FormGroup;
+    customers: Array<any>;
 
-  ngOnInit() {
-  }
+    cid: any;
+    name: any;
+    address: any;
+    mobile: any;
+
+    update: boolean = false;
+
+    constructor(private formBuilder: FormBuilder, private dataService: DataService) {
+        this.customerForm = this.formBuilder.group({
+            txtName: [
+                '', Validators.required,
+            ],
+            txtMobile: [
+                '', Validators.required,
+            ],
+            txtAddress: [
+                '', Validators.required,
+            ]
+        });
+    }
+
+    addCustomer() {
+        const customer = {
+            cid: 0,
+            name: this.customerForm.controls['txtName'].value,
+            address: this.customerForm.controls['txtAddress'].value,
+            mobile: this.customerForm.controls['txtMobile'].value
+        };
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to add a New Customer!',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Add it!',
+            cancelButtonText: 'No, Discard it'
+        }).then((result) => {
+            if (result.value) {
+                this.dataService.addNewCustomer(customer).subscribe(
+                    (response) => {
+                        if (response.code === 201) {
+                            Swal.fire(
+                                'Added!',
+                                'New Customer hass been Saved Successfully.',
+                                'success'
+                            );
+                            this.getAllCustomers();
+                        }
+                    }
+                );
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelled',
+                    'Customer Not Added',
+                    'error'
+                );
+            }
+        });
+    }
+
+    proceedUpdate(customer) {
+
+    }
+
+    updateCustomer() {
+
+    }
+
+    deleteCustomer(cid) {
+
+    }
+
+    getAllCustomers() {
+        this.dataService.getAllCustomers().subscribe(
+            (response: any[]) => {
+                console.log(response);
+                this.customers = response;
+            }
+        );
+    }
+
+    ngOnInit() {
+        this.getAllCustomers();
+    }
 
 }

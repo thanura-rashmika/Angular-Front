@@ -35,6 +35,8 @@ import {OrderDetailsComponent} from '../../order-details/order-details.component
         MatInputModule,
         MatSelectModule,
         MatTooltipModule,
+        FormsModule,
+        ReactiveFormsModule,
     ],
     declarations: [
         DashboardComponent,
