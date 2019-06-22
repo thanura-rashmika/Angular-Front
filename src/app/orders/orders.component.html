@@ -13,8 +13,8 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Customer</mat-label>
-                                        <mat-select>
-                                            <mat-option *ngFor="let customer of customers" [value]="customer.cid" [formControl]="orderForm.controls['cusSelect']">
+                                        <mat-select [formControl]="orderForm.controls['cusSelect']">
+                                            <mat-option *ngFor="let customer of customers" [value]="customer.cid">
                                                 {{customer.name}}
                                             </mat-option>
                                         </mat-select>
@@ -26,8 +26,8 @@
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
                                         <mat-label>Item</mat-label>
-                                        <mat-select>
-                                            <mat-option *ngFor="let item of items" [value]="item.code" [formControl]="orderForm.controls['itemSelect']">
+                                        <mat-select [formControl]="orderForm.controls['itemSelect']" (selectionChange)="itemSelected()">
+                                            <mat-option *ngFor="let item of items" [value]="item.code">
                                                 {{item.name}}
                                             </mat-option>
                                         </mat-select>
@@ -35,12 +35,12 @@
                                 </div>
                                 <div class="col-md-6">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Quantity" type="number" [formControl]="orderForm.controls['txtQty']">
+                                        <input matInput placeholder="Quantity" type="number" [formControl]="orderForm.controls['txtQty']" [(ngModel)]="qty">
                                     </mat-form-field>
                                 </div>
                             </div>
-                            <button *ngIf="!update" mat-raised-button type="submit" class="btn btn-info pull-right" (click)="addItem()">Add Item</button>
-                            <button *ngIf="update" mat-raised-button type="submit" class="btn btn-success pull-right" (click)="updateItem()">Update Item</button>
+                            <button mat-raised-button type="submit" class="btn btn-success pull-right" (click)="placeOrder()">Place Order</button>
+                            <button mat-raised-button type="submit" class="btn btn-info pull-right" (click)="addItem()">Add Item</button>
                             <button mat-raised-button type="reset" class="btn btn-danger pull-right" (click)="clearForm()">Clear</button>
                             <div class="clearfix"></div>
                         </form>
@@ -99,10 +99,10 @@
                                         {{item.qty}}
                                     </td>
                                     <td>
-                                        {{item.unitPrice}}
+                                        {{item.unitPrice}}.00
                                     </td>
                                     <td>
-                                        {{item.qty*unitPrice}}
+                                        {{item.qty*item.unitPrice}}.00
                                     </td>
                                     <td>
                                         <i class="fa fa-pencil" (click)="proceedUpdate(item)"></i>

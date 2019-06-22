@@ -25,7 +25,7 @@ export class OrdersComponent implements OnInit {
     name: any;
     price: any;
     qty: any;
-    total: any;
+    total: number = 0;
 
     orderForm: FormGroup;
 
@@ -54,29 +54,45 @@ export class OrdersComponent implements OnInit {
         let price = 0;
         for (let i = 0; i < this.items.length; i++) {
             if (this.items[i].code === code) {
-                qty = this.items[i].qty;
+                console.log(this.items[i]);
+                qty = this.orderForm.controls['txtQty'].value;
                 price = this.items[i].price;
-                this.total += (price * qty);
+                this.total = this.total + (price * qty);
+                this.orderDetais.push(
+                    {
+                        code: this.orderForm.controls['itemSelect'].value,
+                        oid: 0,
+                        unitPrice: price,
+                        qty: qty,
+                    }
+                );
             }
         }
+    }
 
+    itemSelected() {
+        const item = this.orderForm.controls['itemSelect'].value;
+
+        for (let i = 0; i < this.items.length; i++) {
+            if (this.items[i].code = item) {
+                this.name = this.items[i].name;
+                this.price = this.items[i].price;
+            }
+        }
+    }
+
+    qtyAdded() {
+        this.qty = this.orderForm.controls['qty'].value;
+    }
+
+    placeOrder() {
         const order = {
             oid: 0,
-            date: Date.now(),
+            date: new Date(Date.now()),
             total: this.total,
             cid: this.orderForm.controls['cusSelect'].value,
-            orderDetailDTOS: []
+            orderDetailDTOS: this.orderDetais,
         };
-
-        this.orderDetais.push(
-            {
-                code: this.orderForm.controls['itemSelect'].value,
-                oid: 0,
-                unitPrice: price,
-                qty: qty,
-            }
-        );
-
         console.log(order);
     }
 
