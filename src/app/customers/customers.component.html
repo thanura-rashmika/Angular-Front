@@ -30,7 +30,7 @@
                             </div>
                             <button mat-raised-button type="submit" *ngIf="!update" [disabled]="!customerForm.valid" class="btn btn-info pull-right" (click)="addCustomer()">Add Customer</button>
                             <button mat-raised-button type="submit" *ngIf="update" [disabled]="!customerForm.valid" class="btn btn-success pull-right" (click)="updateCustomer()">Update Customer</button>
-                            <button mat-raised-button type="reset" class="btn btn-danger pull-right">Clear</button>
+                            <button mat-raised-button type="reset" class="btn btn-danger pull-right" (click)="clearForm()">Clear</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>

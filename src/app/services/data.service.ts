@@ -47,8 +47,8 @@ export class DataService {
         return this.http.post(MAIN_URL + ITEM_URL, item, {headers: {'Content-Type': 'application/json', 'operation': 'add'}});
     }
 
-    deleteItem(iid): Observable<any> {
-        return this.http.delete(MAIN_URL + ITEM_URL + `/${iid}`, {headers: {'Content-Type': 'application/json', 'operation': 'delete'}});
+    deleteItem(code): Observable<any> {
+        return this.http.delete(MAIN_URL + ITEM_URL + `/${code}`, {headers: {'Content-Type': 'application/json', 'operation': 'delete'}});
     }
 
     updateItem(item): Observable<any> {

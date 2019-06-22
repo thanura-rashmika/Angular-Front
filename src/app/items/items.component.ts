@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {DataService} from '../services/data.service';
 import Swal from 'sweetalert2';
+import {ItemModel} from '../models/item.model';
 
 @Component({
     selector: 'app-items',
@@ -51,9 +52,10 @@ export class ItemsComponent implements OnInit {
         const item = {
             code: 0,
             name: this.itemForm.controls['txtName'].value,
-            price: this.itemForm.controls['txtPrice'].value,
-            qty: this.itemForm.controls['txtQty'].value
+            price: Number(this.itemForm.controls['txtPrice'].value),
+            qty: Number(this.itemForm.controls['txtQty'].value)
         };
+        console.log(item);
         Swal.fire({
             title: 'Are you sure?',
             text: 'You are about to add a New Item!',
@@ -102,8 +104,8 @@ export class ItemsComponent implements OnInit {
         const item = {
             code: this.code,
             name: this.itemForm.controls['txtName'].value,
-            price: this.itemForm.controls['txtPrice'].value,
-            qty: this.itemForm.controls['txtQty'].value,
+            price: Number(this.itemForm.controls['txtPrice'].value),
+            qty: Number(this.itemForm.controls['txtQty'].value),
         };
 
         Swal.fire({
@@ -117,9 +119,9 @@ export class ItemsComponent implements OnInit {
             if (result.value) {
                 this.dataService.updateItem(item).subscribe(
                     (response) => {
-                        if (response.code === 200) {
+                        if (response.code === 201) {
                             Swal.fire(
-                                'Added!',
+                                'Updated!',
                                 'Item has been Updated Successfully.',
                                 'success'
                             );
@@ -140,13 +142,46 @@ export class ItemsComponent implements OnInit {
     }
 
     deleteItem(code) {
-
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You are about to remove an Item!',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Remove it!',
+            cancelButtonText: 'No, Keep it'
+        }).then((result) => {
+            if (result.value) {
+                this.dataService.deleteItem(code).subscribe(
+                    (response) => {
+                        if (response.code === 201) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Item has been Removed Successfully.',
+                                'success'
+                            );
+                            this.getAllItems();
+                            this.clearForm();
+                            this.state = 'Add'
+                        }
+                    }
+                );
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                Swal.fire(
+                    'Cancelled',
+                    'Item Not Removed',
+                    'error'
+                );
+            }
+        });
     }
 
     clearForm() {
+        this.code = 0;
         this.itemForm.controls['txtName'].setValue('');
         this.itemForm.controls['txtPrice'].setValue('');
         this.itemForm.controls['txtQty'].setValue('');
+        this.state = 'Save';
+        this.update = false
     }
 
 }

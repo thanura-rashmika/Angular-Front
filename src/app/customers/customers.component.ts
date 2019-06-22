@@ -111,7 +111,6 @@ export class CustomersComponent implements OnInit {
                                 'success'
                             );
                             this.getAllCustomers();
-                            this.state = 'Save'
                             this.clearForm();
                         }
                     }
@@ -163,6 +162,8 @@ export class CustomersComponent implements OnInit {
         this.customerForm.controls['txtName'].setValue('');
         this.customerForm.controls['txtAddress'].setValue('');
         this.customerForm.controls['txtMobile'].setValue('');
+        this.state = 'Save';
+        this.update = false
     }
 
     getAllCustomers() {
